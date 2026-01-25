@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnakeFacts! Learn science with ease!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="startScreen">
+            <h1>🔬 SnakeFacts! Learn science with ease!</h1>
+            <h2>Elementary 1 Science Learning Game</h2>
+            <p>Help the snake collect science items and learn about the natural world!</p>
+            
+            <div class="topics">
+                <h3>📚 Topics:</h3>
+                <div class="topic-list">
+                    <span class="topic-tag">🔬 Science Process Skills</span>
+                    <span class="topic-tag">👀 Science Room Rules</span>
+                    <span class="topic-tag">💬 Living Things and Non-Living Things</span>
+                </div>
+            </div>
+            
+            <p><strong>How to play:</strong> Use arrow keys to move the snake. Collect science items to score points and learn fun facts!</p>
+            
+            <button onclick="startGame()">Start Game</button>
+            
+            <div class="controls">
+                <p>Controls: ↑ ↓ ← → Arrow Keys</p>
+            </div>
+        </div>
+
+        <div id="gameScreen">
+            <div id="stageInfo"></div>
+            <div id="gameInfo">
+                <div>🎯 Score: <span id="score">0</span></div>
+                <div>⏱️ Time: <span id="timer">0</span>s</div>
+                <div>⭐ Stars: <span id="stars">0</span></div>
+                <div style="cursor: pointer;" onclick="toggleMusic()" title="Toggle Music">🔊</div>
+            </div>
+            <canvas id="canvas" width="500" height="500"></canvas>
+            
+            <div id="questionSection">
+                <div id="questionText">Collect 120 points to unlock the answer! 🔓</div>
+                <div id="lockIcon">🔒</div>
+                <div id="answerText"></div>
+            </div>
+            
+            <div id="scienceFact">
+                <h4>🔬 Science Fact:</h4>
+                <p id="factText">Collect items to learn science facts!</p>
+            </div>
+        </div>
+
+        <div id="endScreen">
+            <h1>🎓 Well Done!</h1>
+            <h2>Final Score: <span id="finalScore">0</span></h2>
+            <div id="starDisplay"></div>
+            <h2>Time: <span id="finalTime">0</span>s</h2>
+            <div id="finalFact" style="margin: 20px 0; padding: 15px; background: #f0f7ff; border-radius: 10px;">
+                <p style="color: #666;">Keep learning science!</p>
+            </div>
+            <button onclick="restartGame()">Play Again</button>
+        </div>
+
+        <div id="questionModal">
+            <div class="modalContent">
+                <h2>📚 Question</h2>
+                <div class="questionBox">
+                    <h3>Question:</h3>
+                    <p id="modalQuestion"></p>
+                </div>
+                <div class="answerBox">
+                    <h3>✓ Answer:</h3>
+                    <p id="modalAnswer"></p>
+                </div>
+                <div id="timerDisplay">Time: <span id="modalTimer">20</span>s</div>
+                <div class="modalButtons">
+                    <button class="nextBtn" onclick="nextQuestion()">Next Question →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
