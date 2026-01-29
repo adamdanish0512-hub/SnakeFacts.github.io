@@ -1,2 +1,2 @@
 # SnakeFacts.github.io
-# there is an error when combined into 1 file. will fix soon...
+# this code runs on 1 file. kindly be careful when editing the code so that it doesnt breaks!
