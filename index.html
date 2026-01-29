@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 SnakeFacts! - Science Year 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-particles"></div>
+    
+    <div class="container">
+        <!-- START SCREEN -->
+        <div id="startScreen" class="screen active">
+            <div class="logo-animation">🌱</div>
+            <h1>🌍 SnakeFacts!</h1>
+            <h2>Malaysian Science Year 1 - Unit 2</h2>
+            <p class="subtitle">Discover the Amazing World of Living Things!</p>
+            
+            <div class="topic-showcase">
+                <div class="showcase-header">
+                    <h3>📚 Learning Objectives (Unit 2.1 & 2.2)</h3>
+                </div>
+                <div class="learning-cards">
+                    <div class="learning-card">
+                        <div class="card-icon">🔍</div>
+                        <h4>Identify Living Things</h4>
+                        <p>Learn the 5 characteristics: Move, Grow, Reproduce, Eat, Breathe</p>
+                    </div>
+                    <div class="learning-card">
+                        <div class="card-icon">🪨</div>
+                        <h4>Non-Living Things</h4>
+                        <p>Understand what makes things non-living</p>
+                    </div>
+                    <div class="learning-card">
+                        <div class="card-icon">🌊</div>
+                        <h4>Basic Needs</h4>
+                        <p>Discover what living things need: Air, Water, Food, Shelter</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-instructions">
+                <h3>🎮 How to Play</h3>
+                <div class="instruction-grid">
+                    <div class="instruction-item">
+                        <span class="step-number">1</span>
+                        <p>Use <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> arrow keys to move</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="step-number">2</span>
+                        <p>Collect <strong>living things</strong> items to score points</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="step-number">3</span>
+                        <p>Learn facts and answer questions about nature</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="step-number">4</span>
+                        <p>Complete 3 stages to become a Living World Expert!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="start-btn pulse" onclick="startGame()">
+                <span>🚀 Start Learning Adventure</span>
+            </button>
+            
+            <div class="difficulty-selector">
+                <label>Speed:</label>
+                <button class="diff-btn" onclick="setDifficulty('easy')">🐢 Easy</button>
+                <button class="diff-btn active" onclick="setDifficulty('medium')">🦊 Medium</button>
+                <button class="diff-btn" onclick="setDifficulty('hard')">🐆 Fast</button>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div id="stageInfo" class="stage-badge">
+                    <span class="stage-icon">🌱</span>
+                    <span class="stage-text">Stage 1: Characteristics</span>
+                </div>
+                
+                <div class="game-stats">
+                    <div class="stat-item score-stat">
+                        <span class="stat-icon">🎯</span>
+                        <div class="stat-content">
+                            <span class="stat-label">Score</span>
+                            <span id="score" class="stat-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item time-stat">
+                        <span class="stat-icon">⏱️</span>
+                        <div class="stat-content">
+                            <span class="stat-label">Time</span>
+                            <span id="timer" class="stat-value">0s</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item stars-stat">
+                        <span class="stat-icon">⭐</span>
+                        <div class="stat-content">
+                            <span class="stat-label">Stars</span>
+                            <span id="stars" class="stat-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <button class="music-toggle" onclick="toggleMusic()" title="Toggle Music">
+                        <span id="musicIcon">🔊</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="canvas-container">
+                    <canvas id="canvas" width="600" height="600"></canvas>
+                    <div id="comboDisplay" class="combo-display"></div>
+                </div>
+
+                <div class="info-panel">
+                    <div id="currentItemCard" class="current-item-card">
+                        <h4>🎯 Current Target</h4>
+                        <div class="item-display">
+                            <span id="targetEmoji" class="target-emoji">🌱</span>
+                            <span id="targetName" class="target-name">Living Thing</span>
+                        </div>
+                        <div class="item-type" id="itemType">Living Thing</div>
+                    </div>
+
+                    <div id="scienceFact" class="science-fact-card">
+                        <div class="fact-header">
+                            <span class="fact-icon">💡</span>
+                            <h4>Science Fact</h4>
+                        </div>
+                        <p id="factText">Collect items to learn amazing facts about living things!</p>
+                    </div>
+
+                    <div id="questionProgress" class="question-progress">
+                        <h4>📚 Learning Progress</h4>
+                        <div class="progress-bar-container">
+                            <div id="progressBar" class="progress-bar" style="width: 0%">
+                                <span id="progressText">0%</span>
+                            </div>
+                        </div>
+                        <p id="nextMilestone">Next question at 80 points!</p>
+                    </div>
+
+                    <div class="controls-reminder">
+                        <h4>🎮 Controls</h4>
+                        <div class="key-display">
+                            <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>
+                        </div>
+                        <p>Press <kbd>P</kbd> to pause</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="endScreen" class="screen">
+            <div class="celebration">🎉</div>
+            <h1>🎓 Congratulations, Young Scientist!</h1>
+            <h2>You've Mastered Unit 2!</h2>
+            
+            <div class="final-stats">
+                <div class="final-stat-card">
+                    <div class="final-stat-icon">🎯</div>
+                    <div class="final-stat-content">
+                        <h3>Final Score</h3>
+                        <p id="finalScore" class="final-number">0</p>
+                    </div>
+                </div>
+                
+                <div class="final-stat-card">
+                    <div class="final-stat-icon">⏱️</div>
+                    <div class="final-stat-content">
+                        <h3>Time Taken</h3>
+                        <p id="finalTime" class="final-number">0s</p>
+                    </div>
+                </div>
+                
+                <div class="final-stat-card">
+                    <div class="final-stat-icon">⭐</div>
+                    <div class="final-stat-content">
+                        <h3>Star Rating</h3>
+                        <div id="starDisplay" class="final-stars"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-badge" id="performanceBadge">
+                <div class="badge-icon">🏆</div>
+                <h3 id="performanceTitle">Science Expert!</h3>
+                <p id="performanceMessage">You've shown excellent understanding of living things!</p>
+            </div>
+
+            <div class="learning-summary">
+                <h3>📚 What You Learned</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">✓ 5 Characteristics of Living Things</div>
+                    <div class="summary-item">✓ Differences from Non-Living Things</div>
+                    <div class="summary-item">✓ Basic Needs: Air, Water, Food, Shelter</div>
+                    <div class="summary-item">✓ Examples from Nature</div>
+                </div>
+            </div>
+
+            <div class="end-buttons">
+                <button class="play-again-btn" onclick="restartGame()">
+                    <span>🔄 Play Again</span>
+                </button>
+                <button class="share-btn" onclick="shareScore()">
+                    <span>📤 Share Score</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- QUESTION MODAL -->
+        <div id="questionModal" class="modal">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📚 Knowledge Check</h2>
+                    <div class="question-counter">
+                        Question <span id="questionNumber">1</span> of <span id="totalQuestions">10</span>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question-box">
+                        <div class="question-icon">❓</div>
+                        <p id="modalQuestion"></p>
+                    </div>
+                    
+                    <div class="answer-box">
+                        <div class="answer-icon">✅</div>
+                        <h4>Answer:</h4>
+                        <p id="modalAnswer"></p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="modal-timer">
+                        <span class="timer-icon">⏱️</span>
+                        <span>Time to read: <span id="modalTimer">15</span>s</span>
+                    </div>
+                    <button class="next-question-btn" onclick="nextQuestion()">
+                        <span>Continue Learning →</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAUSE OVERLAY -->
+        <div id="pauseOverlay" class="pause-overlay">
+            <div class="pause-content">
+                <h2>⏸️ Game Paused</h2>
+                <p>Press <kbd>P</kbd> to resume</p>
+                <button onclick="togglePause()">Resume Game</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
